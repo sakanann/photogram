@@ -4,20 +4,23 @@
 
 <table>
   <tr>
-      <th>タイトル</th>
-      <th>内容</th>
+    <th>タイトル</th>
+    <th>内容</th>
+    <th>投稿者</th>
   </tr>
 
 <% @pictures.each do |picture| %>
-    <tr>
-      <td><%= picture.title %></td>
-      <td><%= picture.content %></td>
+  <tr>
+    <td><%= picture.title %></td>
+    <td><%= picture.content %></td>
+    <td><%= picture.user.name%></td>
 
-      <td><%= link_to '詳細を確認する', picture_path(picture.id) %></td>
-      <td><%= link_to "ブログを編集する", edit_picture_path(picture.id), data: { confirm: '本当に編集していいですか？' } %></td>
-      <td><%= link_to 'ブログを削除する', picture_path(picture.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
-    </tr>
-<% end %>
+    <td><%= link_to '詳細を確認する', picture_path(picture.id) %></td>
+    <% if picture.user == current_user %>
+    <td><%= link_to "ブログを編集する", edit_picture_path(picture.id), data: { confirm: '本当に編集していいですか？' } %></td>
+    <td><%= link_to 'ブログを削除する', picture_path(picture.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
+  </tr>
+    <% end %>
+<%end%>
 </table>
-
-<%= link_to '新しくブログを投稿する', new_picture_path %>
+<%= link_to '新しく投稿する', new_picture_path %>
