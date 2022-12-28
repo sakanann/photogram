@@ -13,7 +13,8 @@ class PicturesController < ApplicationController
     @picture = current_user.pictures.build(picture_params)
     return render :new if params[:back]
     if @picture.save
-      redirect_to pictures_path, notice: "ブログを作成しました！"
+      PictureMailer.picture_mail(@picture).deliver
+      redirect_to pictures_path, notice: "投稿しました！"
     else
       render :new
     end
