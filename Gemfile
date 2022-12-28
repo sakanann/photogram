@@ -37,3 +37,5 @@ gem 'mini_magick'
 gem 'mimemagic', '0.3.7'
 
 gem 'dotenv-rails'
+
+gem 'rexml'
