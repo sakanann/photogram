@@ -10,15 +10,12 @@ class PicturesController < ApplicationController
   end
 
   def create
-    @picture = Picture.new(picture_params)
-    if params[:back]
-      render :new
+    @picture = current_user.pictures.build(picture_params)
+    return render :new if params[:back]
+    if @picture.save
+      redirect_to pictures_path, notice: "ブログを作成しました！"
     else
-      if @picture.save
-        redirect_to pictures_path, notice: "ブログを作成しました！"
-      else
-        render :new
-      end
+      render :new
     end
   end
 
@@ -45,18 +42,18 @@ class PicturesController < ApplicationController
   end
 
   def confirm
-    @picture = Picture.new(picture_params)
+    @picture = current_user.pictures.build(picture_params)
     render :new if @picture.invalid?
   end
 
   private
 	
 	def picture_params
-	    params.require(:Picture).permit(:title, :content)
+    params.require(:picture).permit(:title, :content)
 	end
 	
 	# idをキーとして値を取得するメソッドを追加
 	def set_picture
-	    @picture= Picture.find(params[:id])
+    @picture= Picture.find(params[:id])
 	end
 end
