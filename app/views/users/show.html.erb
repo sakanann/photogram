@@ -6,8 +6,7 @@
 <%= image_tag(@user.image.url) if @user.image && @user.image.url %>
 <p>
 
-<%= link_to "プロフィールを編集する", edit_user_path(@user.id) %><br>
-<%= link_to 'お気に入り一覧', favorites_path %>
-<br>
-<%= link_to '新しく投稿する', new_picture_path %>
+<%= link_to "プロフィールを編集する", edit_user_path(@user) %><br>
+<%= link_to 'お気に入り一覧', favorites_path %><br>
+<%= link_to '新しく投稿する', new_picture_path %><br>
 <%= link_to '投稿一覧', pictures_path %>
