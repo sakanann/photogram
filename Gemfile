@@ -40,3 +40,7 @@ gem 'mimemagic', '0.3.7'
 gem 'dotenv-rails'
 
 gem 'rexml'
+
+gem 'net-smtp'
+gem 'net-imap'
+gem 'net-pop'
