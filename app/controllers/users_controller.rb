@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
-  before_action :ensure_current_user, {only: [:edit, :update]}
+  
   def new
     @user = User.new
   end
@@ -20,8 +20,9 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    unless @user = current_user
-      redirect_to new_picture_path
+    unless @user == current_user
+      flash[:notice] = "権限がありません"
+      redirect_to pictures_path
     end
   end
 
@@ -29,19 +30,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to user_path, notice: "プロフィールを編集しました！"
-		else
+    else
       render :edit
-		end
+    end
   end
 
   private
-
-  def ensure_current_user
-    if @current_user.id != params[:id].to_i
-      flash[:notice]="権限がありません"
-      redirect_to pictures_path
-    end
-  end
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :image)
